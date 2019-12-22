@@ -2,13 +2,19 @@ package org.example.service.impl;
 
 import com.example.domain.Person;
 import com.example.service.IPersonServer;
+import org.apache.dubbo.config.annotation.Method;
 import org.apache.dubbo.config.annotation.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+
+/**
+ * timeout：全局、类级别、方法级别
+ */
+@Service(timeout = 3000, methods = {@Method(name = "findAll", timeout = 1000)})
 public class PersonServiceImpl implements IPersonServer {
+
 
     public List<Person> findAll() {
         List<Person> list = new ArrayList<Person>();
