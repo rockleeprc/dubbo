@@ -4,6 +4,8 @@ package org.example.web;
 import com.example.domain.Person;
 import com.example.service.IPersonServer;
 import org.apache.dubbo.config.annotation.Reference;
+import org.example.service.ConsumerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,16 +15,12 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
 
-    /**
-     * check = false 只有全局、类级别，没有方法级别
-     * retries = 2 默认2，不包含第一次请求失败，重试2次，总共3次请求
-     */
-    @Reference
-    private IPersonServer personServer;
+    @Autowired
+    private ConsumerService consumerService;
 
     @RequestMapping("/findAll")
     public List<Person> findAll() {
-        return personServer.findAll();
+        return consumerService.findAll();
     }
 
 }
