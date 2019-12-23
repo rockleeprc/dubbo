@@ -14,7 +14,7 @@ public class ConsumerService {
      * check = false 只有全局、类级别，没有方法级别
      * retries = 2 默认2，不包含第一次请求失败，重试2次，总共3次请求
      */
-    @Reference(version = "1.0.0")
+    @Reference(version = "1.0.0",check = true)
     private IPersonServer personServer;
 
 
