@@ -4,7 +4,6 @@ import com.example.domain.Person;
 import com.example.service.IPersonServer;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,7 +19,7 @@ public class ConsumerService {
     @Reference(version = "1.0.0", check = true)
     private IPersonServer personServer;
 
-    @HystrixCommand(fallbackMethod = "reliable")
+    @HystrixCommand(fallbackMethod = "fallback")
     public List<Person> findAll() {
         long time = System.currentTimeMillis();
         if (time % 2 == 0) {
@@ -30,7 +29,7 @@ public class ConsumerService {
     }
 
 
-    public List<Person> reliable() {
+    public List<Person> fallback() {
         return Arrays.asList(new Person("hystrix"));
     }
 }
